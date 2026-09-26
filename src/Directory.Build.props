@@ -8,15 +8,17 @@
     <RepositoryType>git</RepositoryType>
 
     <!-- build options -->
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DebugType>embedded</DebugType>
 
     <!-- directory paths -->
-    <GamePath>C:\Program Files\Epic Games\TheLongDark</GamePath>
+    <GamePath>C:\Program Files (x86)\Steam\steamapps\common\TheLongDark</GamePath>
+    <ManagedPath>$(GamePath)\MelonLoader\Managed</ManagedPath>
     <ModsPath>$(GamePath)\Mods</ModsPath>
     <ReleasesPath>$(MSBuildThisFileDirectory)\..\_releases</ReleasesPath>
   </PropertyGroup>
+
 </Project>

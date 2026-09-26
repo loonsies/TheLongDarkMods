@@ -1,8 +1,6 @@
 using System;
-using Il2Cpp;
 using MelonLoader;
 using Pathoschild.TheLongDarkMods.AutoFillMapOnExplore.Framework;
-using Pathoschild.TheLongDarkMods.Common;
 using UnityEngine;
 
 namespace Pathoschild.TheLongDarkMods.AutoFillMapOnExplore;
@@ -10,19 +8,12 @@ namespace Pathoschild.TheLongDarkMods.AutoFillMapOnExplore;
 /// <inheritdoc />
 public class ModEntry : MelonMod
 {
-    /*********
-    ** Fields
-    *********/
     /// <summary>The mod settings.</summary>
     private readonly ModConfig Config = new();
 
     /// <summary>When the map was last filled.</summary>
     private DateTime LastMapAutoFill = DateTime.UtcNow;
 
-
-    /*********
-    ** Public methods
-    *********/
     /// <inheritdoc />
     public override void OnInitializeMelon()
     {
@@ -37,7 +28,8 @@ public class ModEntry : MelonMod
         if (
             config.Enabled
             && (DateTime.UtcNow - this.LastMapAutoFill).TotalSeconds > config.AutoFillSeconds
-            && SceneHelper.IsPlayableScene()
+            && GameManager.m_Instance != null
+            && !GameManager.IsMainMenuActive()
             && InterfaceManager.GetPanel<Panel_Map>() is { } map
             && map.SceneCanBeMapped(map.GetMapNameOfCurrentScene())
         )
@@ -47,8 +39,9 @@ public class ModEntry : MelonMod
             map.DoNearbyDetailsCheck(
                 radius: config.AutoFillRadius,
                 forceAddSurveyPosition: false,
-                useOverridePosition: false, // use player position
-                overridePostion: Vector3.zero
+                useOverridePosition: false,
+                overridePostion: Vector3.zero,
+                shouldAllowVistaReveals: false
             );
         }
     }
